@@ -24,7 +24,7 @@ class RegisterController extends Controller
                 return response()->json([
                     'status' => 'error',
                     'errors' => $validator->errors(),
-                ], 400);
+                ], 422);
             }
 
             $user = User::create([

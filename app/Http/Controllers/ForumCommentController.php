@@ -102,7 +102,7 @@ class ForumCommentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            response()->json($validator->errors())->send();
+            response()->json($validator->errors(), 422)->send();
             exit;
         }
     }
