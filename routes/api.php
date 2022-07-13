@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{AuthController, ForumCommentController, ForumController, RegisterController};
+use App\Http\Controllers\{AuthController, ForumCommentController, ForumController, RegisterController, UserController};
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +25,10 @@ Route::middleware(['api'])->group(function () {
         Route::post('refresh', [AuthController::class, 'refresh']);
         Route::post('me', [AuthController::class, 'me']);
     });
+
+    Route::get('user/@{username}', [UserController::class, 'show']);
+    Route::get('user/@{username}/activity', [UserController::class, 'getActivity']);
+
 
     Route::get('forum/tag/{tag}', [ForumController::class, 'filterTag']);
 
