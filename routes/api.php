@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{AuthController, ForumController, RegisterController};
+use App\Http\Controllers\{AuthController, ForumCommentController, ForumController, RegisterController};
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +17,17 @@ use App\Http\Controllers\{AuthController, ForumController, RegisterController};
 */
 
 Route::middleware(['api'])->group(function () {
-    
-    Route::prefix('auth')->group(function(){
+
+    Route::prefix('auth')->group(function () {
         Route::post('login', [AuthController::class, 'login']);
         Route::post('register', [RegisterController::class, 'register']);
+        Route::post('logout', [AuthController::class, 'refresh']);
         Route::post('refresh', [AuthController::class, 'refresh']);
         Route::post('me', [AuthController::class, 'me']);
     });
 
-    Route::apiResource('forums', ForumController::class);
+    Route::get('forum/tag/{tag}', [ForumController::class, 'filterTag']);
 
+    Route::apiResource('forums', ForumController::class);
+    Route::apiResource('forums.comments', ForumCommentController::class);
 });

@@ -6,14 +6,15 @@ use App\Models\Forum;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Exceptions\UserNotDefinedException;
+use App\Http\Controllers\AuthUserTrait;
+use App\Http\Resources\ForumResource;
 
 class ForumController extends Controller
 {
+    use AuthUserTrait;
 
     public function __construct()
     {
-        // $this->middleware('auth:api');
         return auth()->shouldUse('api');
     }
 
@@ -24,7 +25,7 @@ class ForumController extends Controller
      */
     public function index()
     {
-        return Forum::with('user:id,username')->get();
+        return ForumResource::collection(Forum::with('user')->paginate(5));
     }
 
     /**
@@ -60,9 +61,8 @@ class ForumController extends Controller
      */
     public function show($id)
     {
-        $this->getAuthUser();
-        $forum = $this->checkForum($id);
-        return $forum;
+        // $this->getAuthUser();
+        return new ForumResource(Forum::with('user', 'comments.user')->findOrFail($id));
     }
 
     /**
@@ -74,12 +74,10 @@ class ForumController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = $this->getAuthUser();
         $forum = $this->checkForum($id);
-
         $this->validateRequest();
 
-        $this->checkOwnership($user->id, $forum->user_id);
+        $this->checkOwnership($forum->user_id);
 
         // cek slug jika sudah ada maka generate lagi
         $slug = Str::slug(request('title'));
@@ -105,8 +103,7 @@ class ForumController extends Controller
     public function destroy($id)
     {
         $forum = $this->checkForum($id);
-        $user = $this->getAuthUser();
-        $this->checkOwnership($user->id, $forum->user_id);
+        $this->checkOwnership($forum->user_id);
         $forum->delete();
         return response()->json(['message' => 'Successfully deleted forum !']);
     }
@@ -125,24 +122,6 @@ class ForumController extends Controller
         }
     }
 
-    private function getAuthUser()
-    {
-        try {
-            return auth()->userOrFail();
-        } catch (UserNotDefinedException $e) {
-            response()->json(['message' => "Not authenticated, you have to login first !"])->send();
-            exit;
-        }
-    }
-
-    private function checkOwnership($authUser, $ownerUser)
-    {
-        if ($authUser != $ownerUser) {
-            response()->json(['message' => 'You are not authorized to update this forum !'])->send();
-            exit;
-        }
-    }
-
     private function checkForum($idParam)
     {
         try {
@@ -151,5 +130,10 @@ class ForumController extends Controller
             response()->json(['message' => 'Forum not found !'])->send();
             exit;
         }
+    }
+
+    public function filterTag($tag)
+    {
+        return ForumResource::collection(Forum::with('user')->where('category', $tag)->get());
     }
 }
