@@ -13,4 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', fn () => "<h1>Hello everyone 👋, the API forum app has been released !</h1>");
+Route::get('/', fn () => "<h1>Hello Everyone 👋, the API forum app has been released !</h1>");
