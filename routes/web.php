@@ -13,4 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', fn () => "<h1>STAGING ENVIRONMENT</h1><p>Hello Everyone 👋, the API forum app has been released !</p>");
+Route::get('/', fn () => "<h1>PRODUCTION ENVIRONMENT</h1><p>Hello Everyone 👋, the API forum app has been released !</p>");
