@@ -1,0 +1,7 @@
+{
+    "name": "Forum App",
+    "description": "Forum App",
+    "repository": "https://github.com/ardinur03/forum-app",
+    "logo": "https://node-js-sample.herokuapp.com/node.png",
+    "keywords": ["php", "laravel", "forum"]
+}
