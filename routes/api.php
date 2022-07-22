@@ -17,7 +17,6 @@ use App\Http\Controllers\{AuthController, ForumCommentController, ForumControlle
 */
 
 Route::middleware(['api'])->group(function () {
-
     Route::prefix('auth')->group(function () {
         Route::post('login', [AuthController::class, 'login']);
         Route::post('register', [RegisterController::class, 'register']);
@@ -29,9 +28,7 @@ Route::middleware(['api'])->group(function () {
     Route::get('user/@{username}', [UserController::class, 'show']);
     Route::get('user/@{username}/activity', [UserController::class, 'getActivity']);
 
-
     Route::get('forum/tag/{tag}', [ForumController::class, 'filterTag']);
-
     Route::apiResource('forums', ForumController::class);
     Route::apiResource('forums.comments', ForumCommentController::class);
 });
