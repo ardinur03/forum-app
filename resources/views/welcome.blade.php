@@ -19,7 +19,7 @@
         } else {
             $typeEnv = 'UNKNOWN';
         }
-        echo "<h1>{$typeEnv} - ENVIRONMENT</h1><p>Hello Everyone 👋, the API forum app has been released !</p> <p>Made with <span style=\"color: #D3070A\"> ❤ </span>in Bandung | Created By <a href=\"\">ardinur03</a></p>";
+        echo "<h1>{$typeEnv} - ENVIRONMENT</h1><p>Hello Everyone 👋, the API forum app has been released !</p> <p>Made with <span style=\"color: #D3070A\"> ❤ </span>in Bandung | Created By <a href=\"https://github.com/ardinur03/forum-app\" target=\"_blank\">ardinur03</a></p>";
     @endphp
 </body>
 
