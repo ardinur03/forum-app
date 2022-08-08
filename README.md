@@ -2,6 +2,8 @@
 
 is a simple forum api using php programming language with laravel 8 framework and laravel authentication with jwt.
 
+[![Demo Staging Server](https://img.shields.io/badge/demo_Staging_Server-373eee?style=for-the-badge&logo=ko-fi&logoColor=white)](https://staging-api-forum-app-laravel.herokuapp.com/)
+
 ## Features
 
 1. Authentication With JWT
